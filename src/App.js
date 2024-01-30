@@ -18,8 +18,21 @@ class App extends React.Component {
       {id : 1, title:"Hello vue", done : false},
       {id : 2, title:"Hello angular", done : false}
     ]}
-    
-  }  
+  }
+  add = (item) => {
+    //react는 props는 수정할 수 없고
+    //state는 수정이 가능하지만 원본은 직접 수정하는 것은 안되고
+    //setState 메서드를 이용해서만 수정이 가능합니다.
+    //배열에 데이터를 추가하기 위해서 state의 배열을 복사
+    const thisItems = this.state.items;
+    //item의 id와 done값을 설정 - title 만 입력하기 때문
+    item.id = "ID-" + thisItems.length;
+    item.done = false;
+    //복사한 데이터에 데이터를 추가
+    thisItems.push(item)
+    //복사한 데이터를 다시 state에 적용
+    this.setState({items:thisItems})
+  } 
   render(){
     //배열을 순회하면서 출력할 내용을 생성
     //배열을 순회하면서 출력물을 만들 때는 key를 설정해주어야 함.
@@ -36,7 +49,7 @@ class App extends React.Component {
     return(
       <div className = "App">
         <Container>
-          <AddToDo />
+          <AddToDo add = {this.add} />
           {display}
         </Container>
       </div>
