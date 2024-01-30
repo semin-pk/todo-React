@@ -3,7 +3,8 @@ import './App.css';
 import React from "react"
 import ToDo from "./ToDo"
 import Sample from "./Sample"
-
+import {Paper, List, Container} from "@material-ui/core"
+import AddToDo from './AddToDo';
 class App extends React.Component {
   constructor(props){
     super(props)
@@ -23,12 +24,21 @@ class App extends React.Component {
     //배열을 순회하면서 출력할 내용을 생성
     //배열을 순회하면서 출력물을 만들 때는 key를 설정해주어야 함.
     //key를 설정하지않으면 출력에 문제가 없지만 콘솔에 에러가 출력
-    let display = this.state.items.map((item, idx) =>(
-      <ToDo item = {item} key = {item.id} />
-    ));
+    let display = this.state.items.length > 0 && (
+      <Paper style = {{margin:16}}>
+        <List>
+          {this.state.items.map((item, idx) =>( 
+            <ToDo item = {item} key = {idx}/>
+          ))}
+        </List>
+      </Paper>
+    )
     return(
       <div className = "App">
-        {display}
+        <Container>
+          <AddToDo />
+          {display}
+        </Container>
       </div>
     )
   }
